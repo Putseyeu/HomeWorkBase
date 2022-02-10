@@ -143,6 +143,7 @@ namespace HomeWorkDatabasePlayers
     {
         private int _minLevel = 1;
         private int _maxLevel = 99;
+
         public string Name { get; private set; }
         public int Level { get; private set; }
         public bool Banned { get;  set; }
