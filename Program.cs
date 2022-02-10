@@ -10,7 +10,7 @@ namespace HomeWorkDatabasePlayers
     {
         static void Main(string[] args)
         {
-            DataBase[] dataBases =  new DataBase[0];
+            DataBase[] players =  new DataBase[0];
             string userInput = "";
                         
             while (userInput != "5")
@@ -22,19 +22,19 @@ namespace HomeWorkDatabasePlayers
                 switch (userInput)
                 {
                     case "1": 
-                        AddPlayer(ref dataBases);
+                        AddPlayer(ref players);
                         break;
 
                     case "2":
-                        DeletePlayer( ref dataBases);
+                        DeletePlayer( ref players);
                         break;
 
                     case "3":
-                        ChangeStatus(ref dataBases);                                 
+                        ChangeStatus(ref players);                                 
                         break;
 
                     case "4":
-                        ShowPlayers(dataBases);
+                        ShowPlayers(players);
                         break;
                 }                
             }                         
@@ -102,7 +102,7 @@ namespace HomeWorkDatabasePlayers
                     intValue--;
                     if (intValue < dataBases.Length && intValue >= 0)
                     {
-                        dataBases[intValue].Banned = dataBases[intValue].InputStatusBanned();
+                        dataBases[intValue].InputStatusBanned(); /*Banned = dataBases[intValue].InputStatusBanned()*/;
                     }
                     else
                     {
@@ -124,8 +124,7 @@ namespace HomeWorkDatabasePlayers
         {
             string statusPlayer;
             for (int i = 0; i < dataBases.Length; i++)
-            {
-                
+            {               
                 if (dataBases[i].Banned == true)
                 {
                    statusPlayer = " - заблокирован";
@@ -144,22 +143,22 @@ namespace HomeWorkDatabasePlayers
         private int _minLevel = 1;
         private int _maxLevel = 99;
 
+        public bool Banned { get; private set; }
         public string Name { get; private set; }
         public int Level { get; private set; }
-        public bool Banned { get;  set; }
 
         public DataBase()
         {
-            Name = InputName();
-            Level = InputLevel(_minLevel, _maxLevel);
-            Banned = InputStatusBanned();
+            InputName();
+            InputLevel(_minLevel, _maxLevel);
+            InputStatusBanned();
         }
         
         private string InputName()
         {
             Console.WriteLine("Внесите никнейм для игрока");
-            string name = Console.ReadLine();
-            return name;
+            Name = Console.ReadLine();            
+            return Name;
         }
 
         private int InputLevel(int minLevel, int maxLevel)
@@ -187,12 +186,13 @@ namespace HomeWorkDatabasePlayers
                     Console.WriteLine($"Не верный ввод значения.Введите целое число от {minLevel} до {maxLevel}.");
                 }
             }
-            return intValue;
+            Level = intValue;
+            return Level;
         }
 
         public bool InputStatusBanned()
         {
-            bool banned = false;
+            Banned = false;
             bool completed = false;
             string userInput;
 
@@ -202,16 +202,16 @@ namespace HomeWorkDatabasePlayers
                 userInput = Console.ReadLine();
                 if (userInput == "1")
                 {
-                    banned = true;
+                    Banned = true;
                     completed = true;
                 }
                 else if (userInput == "2")
                 {
-                    banned = false;
+                    Banned = false;
                     completed = true;
                 }
             }           
-            return banned;            
+            return Banned;            
         }
     }
 }
